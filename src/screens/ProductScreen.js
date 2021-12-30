@@ -23,8 +23,7 @@ const ProductScreen = ({ match }) => {
   const productListDetails = useSelector((state) => state.productDetails); //Getting the part of the state where it gets stored using useselector hook.
 
   const { loading, error, product } = productListDetails;
-
-  console.log(loading);
+  console.log(match);
 
   useEffect(() => {
     dispatch(listProductDetails(match?.params?.id));
@@ -82,8 +81,8 @@ const ProductScreen = ({ match }) => {
                     </Col>
                   </Row>
                 </ListGroupItem>
-                <ListGroupItem>
-                  {product?.countInStock > 0 && (
+                {product?.countInStock >= 0 && (
+                  <ListGroupItem>
                     <Row>
                       <Col>Qty</Col>
                       <Col>
@@ -102,8 +101,9 @@ const ProductScreen = ({ match }) => {
                         </Form.Control>
                       </Col>
                     </Row>
-                  )}
-                </ListGroupItem>
+                  </ListGroupItem>
+                )}
+
                 <ListGroupItem>
                   <Button
                     className="btn-block"

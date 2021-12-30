@@ -15,6 +15,7 @@ export const listProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
     const { data } = await axios.get("/api/products");
+    console.log(data);
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
       payload: data,
@@ -31,6 +32,7 @@ export const listProducts = () => async (dispatch) => {
 };
 
 export const listProductDetails = (id) => async (dispatch) => {
+  console.log(id);
   //dispatching action to reducers
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
