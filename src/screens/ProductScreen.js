@@ -17,17 +17,20 @@ import {
 import { Link } from "react-router-dom";
 import Rating from "../components/Rating";
 
-const ProductScreen = ({ match }) => {
+const ProductScreen = ({ match, history }) => {
   const [qty, setQty] = useState(0);
   const dispatch = useDispatch();
   const productListDetails = useSelector((state) => state.productDetails); //Getting the part of the state where it gets stored using useselector hook.
 
   const { loading, error, product } = productListDetails;
-  console.log(match);
 
   useEffect(() => {
     dispatch(listProductDetails(match?.params?.id));
   }, [dispatch, match]);
+
+  const AddToCartHandler = () => {
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
+  };
 
   return (
     <>
@@ -74,14 +77,14 @@ const ProductScreen = ({ match }) => {
                     <Col>Status:</Col>
                     <Col>
                       <strong>
-                        {product?.countInStock > 0
+                        {product?.CountInStock >= 0
                           ? "In Stock"
                           : "Out Of Stock"}
                       </strong>
                     </Col>
                   </Row>
                 </ListGroupItem>
-                {product?.countInStock >= 0 && (
+                {product?.CountInStock >= 0 && (
                   <ListGroupItem>
                     <Row>
                       <Col>Qty</Col>
@@ -91,7 +94,7 @@ const ProductScreen = ({ match }) => {
                           value={qty}
                           onChange={(e) => setQty(e.target.value)}
                         >
-                          {[...Array(product?.countInStock).keys()].map((x) => {
+                          {[...Array(product?.CountInStock).keys()].map((x) => {
                             return (
                               <option key={x + 1} value={x + 1}>
                                 {x + 1}
@@ -106,10 +109,10 @@ const ProductScreen = ({ match }) => {
 
                 <ListGroupItem>
                   <Button
+                    onClick={AddToCartHandler}
                     className="btn-block"
                     type="button"
-                    disabled={product?.countInStock > 0 ? false : true}
-                    // style={{ width: "00px" }}
+                    disabled={product?.CountInStock > 0 ? false : true}
                   >
                     Add To Cart
                   </Button>
