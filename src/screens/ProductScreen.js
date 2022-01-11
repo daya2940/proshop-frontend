@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 import Rating from "../components/Rating";
 
 const ProductScreen = ({ match, history }) => {
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const productListDetails = useSelector((state) => state.productDetails); //Getting the part of the state where it gets stored using useselector hook.
 
