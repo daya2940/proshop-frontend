@@ -13,8 +13,6 @@ const HomeScreen = () => {
 
   const { loading, products, error } = productList;
 
-  console.log(products);
-
   useEffect(() => {
     //This way we are making api call using redux for getting the productlist
     dispatch(listProducts());
