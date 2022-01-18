@@ -44,7 +44,7 @@ const CartScreen = ({ match, location, history }) => {
           </Message>
         ) : (
           <ListGroup variant="flush">
-            {cartItems.map((item) => (
+            {cartItems?.map((item) => (
               <ListGroupItem key={item.product}>
                 <Row>
                   <Col md={2}>
@@ -58,16 +58,17 @@ const CartScreen = ({ match, location, history }) => {
                     <Form.Control
                       as="select"
                       value={item.qty}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        console.log(e.target.value);
                         dispatch(
                           addToCart(item.product, Number(e.target.value))
-                        )
-                      }
+                        );
+                      }}
                     >
-                      {[...Array(item?.countInStock).keys()].map((x) => {
+                      {[...Array(item?.countInStock).keys()].map((item) => {
                         return (
-                          <option key={x + 1} value={x + 1}>
-                            {x + 1}
+                          <option key={item + 1} value={item + 1}>
+                            {item + 1}
                           </option>
                         );
                       })}
@@ -90,16 +91,18 @@ const CartScreen = ({ match, location, history }) => {
       </Col>
       <Col md={4}>
         <ListGroup variant="flush">
-          <ListGroupItem>
-            <h2>
-              Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-              items
-            </h2>
-            $
-            {cartItems
-              .reduce((acc, item) => acc + item.qty * item.price, 0)
-              .toFixed(2)}
-          </ListGroupItem>
+          <Card>
+            <ListGroupItem>
+              <h2>
+                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+                items
+              </h2>
+              $
+              {cartItems
+                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .toFixed(2)}
+            </ListGroupItem>
+          </Card>
         </ListGroup>
       </Col>
       <Col md={2}></Col>
