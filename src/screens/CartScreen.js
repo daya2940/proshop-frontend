@@ -14,7 +14,7 @@ import {
   Card,
   ListGroupItem,
 } from "react-bootstrap";
-import { addToCart } from "../actions/cartAction";
+import { addToCart, removeFromCart } from "../actions/cartAction";
 
 const CartScreen = ({ match, location, history }) => {
   const productId = match?.params?.id;
@@ -32,7 +32,7 @@ const CartScreen = ({ match, location, history }) => {
   }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
-    console.log(id);
+    dispatch(removeFromCart(id));
   };
   return (
     <Row>
@@ -78,7 +78,9 @@ const CartScreen = ({ match, location, history }) => {
                     <Button
                       type="button"
                       variant="light"
-                      onClick={removeFromCartHandler(item.product)}
+                      onClick={() => {
+                        removeFromCartHandler(item.product);
+                      }}
                     >
                       <BsTrash />
                     </Button>
@@ -102,10 +104,12 @@ const CartScreen = ({ match, location, history }) => {
                 .reduce((acc, item) => acc + item.qty * item.price, 0)
                 .toFixed(2)}
             </ListGroupItem>
+            <ListGroupItem>
+              <Button>PROCEED TO CHECKOUT</Button>
+            </ListGroupItem>
           </Card>
         </ListGroup>
       </Col>
-      <Col md={2}></Col>
     </Row>
   );
 };
