@@ -59,7 +59,7 @@ const CartScreen = ({ match, location, history }) => {
                       as="select"
                       value={item.qty}
                       onChange={(e) => {
-                        console.log(e.target.value);
+                        e.stopPropagation();
                         dispatch(
                           addToCart(item.product, Number(e.target.value))
                         );
@@ -78,7 +78,8 @@ const CartScreen = ({ match, location, history }) => {
                     <Button
                       type="button"
                       variant="light"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         removeFromCartHandler(item.product);
                       }}
                     >
