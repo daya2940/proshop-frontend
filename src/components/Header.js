@@ -9,10 +9,15 @@ const Header = ({ history }) => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin); //This helps to bring the things which are already present in the store.
   const { userInfo, success } = userLogin;
+  console.log(userInfo);
   console.log(success);
 
   const handleLogout = () => {
     dispatch(logout());
+    console.log(success);
+    if (success) {
+      history.push("/login");
+    }
   };
   return (
     <header>
