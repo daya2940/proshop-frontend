@@ -18,13 +18,15 @@ const ProfileScreen = ({ location, history }) => {
   console.log(error, user);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  // const token = JSON.parse(userInfo.token);
+  console.log(userInfo.token);
 
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
     } else {
       if (!user?.name) {
-        dispatch(getUserDetails(userInfo._id));
+        dispatch(getUserDetails(userInfo._id, userInfo.token));
       } else {
         setName(user?.name);
         setEmail(user?.email);

@@ -88,23 +88,19 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 };
 
-export const getUserDetails = (id) => async (dispatch, getState) => {
+export const getUserDetails = (id, token) => async (dispatch) => {
+  console.log(token);
   try {
     dispatch({
       type: USER_DETAILS_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState(); //This brings the token with which the user has logged in
-    console.log(userInfo.token);
-    const config = {
+    const { data } = await axios.get(`/api/users/profile/${id}`, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${token ? token : ""}`,
       },
-    };
-    const { data } = await axios.get(`/api/users/profile/${id}`, config);
+    });
     console.log(data);
     dispatch({
       type: USER_DETAILS_SUCCESS,
