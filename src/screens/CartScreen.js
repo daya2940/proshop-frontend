@@ -106,10 +106,7 @@ const CartScreen = ({ match, location, history }) => {
                 .toFixed(2)}
             </ListGroupItem>
             <ListGroupItem>
-              <Button
-                onClick={() => history.push("/shipping")}
-                style={{ width: "370px" }}
-              >
+              <Button onClick={() => history.push("/shipping")}>
                 PROCEED TO CHECKOUT
               </Button>
             </ListGroupItem>
